@@ -2,75 +2,146 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1e3a8a">
 <title>Lista de Materiales Eléctricos</title>
 <style>
-  * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-  body { background: #f0f4f8; margin: 0; padding: 20px; }
-  .container { max-width: 900px; margin: auto; background: #fff; padding: 25px;
-               border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,.1); }
-  h1 { color: #1e3a8a; text-align: center; margin-bottom: 5px; }
-  h2 { color: #334155; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; margin-top: 25px; }
-  .cliente { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
-  .cliente input, .cliente textarea { padding: 10px; border: 1px solid #cbd5e1;
-                                      border-radius: 6px; font-size: 14px; width: 100%; }
-  .cliente textarea { grid-column: span 2; resize: vertical; min-height: 60px; }
-  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-  th, td { padding: 8px; border-bottom: 1px solid #e2e8f0; text-align: left; font-size: 14px; }
-  th { background: #1e3a8a; color: #fff; position: sticky; top: 0; }
-  tr:hover { background: #f1f5f9; }
-  input[type="checkbox"] { transform: scale(1.3); cursor: pointer; }
-  input[type="number"] { width: 70px; padding: 5px; border: 1px solid #cbd5e1;
-                         border-radius: 4px; text-align: center; }
-  input[type="number"]:disabled { background: #f1f5f9; }
-  input[type="number"].error { border-color: #dc2626; background: #fef2f2; }
-  .botones { display: flex; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
-  button { flex: 1; min-width: 180px; padding: 14px; border: none; border-radius: 8px;
-           font-size: 15px; font-weight: bold; cursor: pointer; transition: .2s; color: #fff; }
-  .wa { background: #25D366; } .wa:hover { background: #1ebe5a; }
-  .mail { background: #2563eb; } .mail:hover { background: #1d4ed8; }
-  .pdf { background: #dc2626; } .pdf:hover { background: #b91c1c; }
-  .reset { background: #64748b; } .reset:hover { background: #475569; }
-  .contador { text-align: right; font-weight: bold; color: #1e3a8a; margin-top: 8px; }
-  @media (max-width: 600px){ .cliente { grid-template-columns: 1fr; }
-                             .cliente textarea { grid-column: span 1; } }
+  * { box-sizing: border-box; font-family: -apple-system, 'Segoe UI', Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent; }
+
+  html, body { margin: 0; padding: 0; background: #f0f4f8; }
+  body { padding: 12px 12px 110px; font-size: 16px; }
+
+  .container { max-width: 900px; margin: auto; background: #fff; padding: 16px;
+               border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+
+  h1 { color: #1e3a8a; text-align: center; margin: 0 0 4px; font-size: 20px; }
+  .sub { text-align: center; color: #64748b; font-size: 13px; margin: 0 0 16px; }
+  h2 { color: #334155; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;
+       margin: 20px 0 12px; font-size: 16px; }
+
+  /* ==== DATOS CLIENTE ==== */
+  .cliente { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .cliente input, .cliente textarea {
+    padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px;
+    font-size: 16px; width: 100%; background: #fff;
+  }
+  .cliente textarea { grid-column: span 2; resize: vertical; min-height: 55px; }
+  .cliente input:focus, .cliente textarea:focus {
+    outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+  }
+
+  /* ==== MATERIALES ==== */
+  .material {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px; margin-bottom: 8px;
+    border: 1px solid #e2e8f0; border-radius: 10px;
+    background: #fff; transition: .15s;
+  }
+  .material.activo { border-color: #2563eb; background: #eff6ff; }
+
+  .chk-wrap { display: flex; align-items: center; justify-content: center;
+              min-width: 34px; height: 34px; }
+  .chk-wrap input[type="checkbox"] {
+    width: 24px; height: 24px; cursor: pointer; accent-color: #2563eb;
+  }
+
+  .nombre { flex: 1; font-size: 15px; color: #1e293b; line-height: 1.3; }
+
+  .cant-wrap { display: flex; flex-direction: column; align-items: center; min-width: 78px; }
+  .cant-wrap label { font-size: 10px; color: #64748b; text-transform: uppercase; margin-bottom: 2px; }
+  .cant-wrap input[type="number"] {
+    width: 78px; padding: 10px 6px; border: 1px solid #cbd5e1; border-radius: 8px;
+    text-align: center; font-size: 16px; font-weight: bold; background: #f8fafc;
+    -moz-appearance: textfield;
+  }
+  .cant-wrap input[type="number"]::-webkit-outer-spin-button,
+  .cant-wrap input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; margin: 0;
+  }
+  .cant-wrap input:disabled { background: #f1f5f9; color: #94a3b8; }
+  .cant-wrap input:enabled { background: #fff; border-color: #2563eb; }
+  .cant-wrap input.error { border-color: #dc2626; background: #fef2f2; }
+  .cant-wrap input:enabled:focus { outline: none; box-shadow: 0 0 0 3px rgba(37,99,235,.15); }
+
+  /* ==== BARRA INFERIOR FIJA ==== */
+  .barra-fija {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    background: #fff; border-top: 1px solid #e2e8f0;
+    padding: 10px 12px; display: flex; gap: 8px; flex-wrap: wrap;
+    box-shadow: 0 -3px 12px rgba(0,0,0,.08); z-index: 100;
+  }
+  .contador { width: 100%; text-align: center; font-size: 13px;
+              color: #1e3a8a; font-weight: bold; margin-bottom: 4px; }
+
+  button {
+    flex: 1; min-width: 0; padding: 14px 8px; border: none; border-radius: 10px;
+    font-size: 14px; font-weight: bold; cursor: pointer; color: #fff;
+    transition: .15s; display: flex; align-items: center; justify-content: center; gap: 4px;
+  }
+  button:active { transform: scale(.96); }
+  .wa { background: #25D366; }
+  .mail { background: #2563eb; }
+  .pdf { background: #dc2626; }
+  .reset { background: #64748b; flex: 0 0 48px; }
+
+  /* ==== MÓVIL ==== */
+  @media (max-width: 600px) {
+    body { padding: 8px 8px 130px; }
+    .container { padding: 12px; border-radius: 10px; }
+    h1 { font-size: 18px; }
+    .cliente { grid-template-columns: 1fr; }
+    .cliente textarea { grid-column: span 1; }
+
+    .material { padding: 10px; gap: 8px; }
+    .nombre { font-size: 14px; }
+    .cant-wrap { min-width: 68px; }
+    .cant-wrap input[type="number"] { width: 68px; padding: 9px 4px; }
+
+    .barra-fija { padding: 8px; gap: 6px; }
+    button { padding: 13px 6px; font-size: 13px; }
+    button .txt-largo { display: none; }
+    .reset { flex: 0 0 44px; font-size: 18px; }
+  }
+
+  @media (max-width: 360px) {
+    button { font-size: 12px; padding: 12px 4px; }
+    .nombre { font-size: 13px; }
+  }
+
+  /* ==== IMPRIMIR ==== */
+  @media print {
+    body { padding: 0; background: #fff; }
+    .barra-fija, .sub, button { display: none !important; }
+    .container { box-shadow: none; padding: 0; }
+    .material { break-inside: avoid; border: 1px solid #ccc; }
+  }
 </style>
 </head>
 <body>
 <div class="container">
   <h1>⚡ Lista de Materiales Eléctricos</h1>
-  <p style="text-align:center;color:#64748b">Marque los materiales y escriba la cantidad a enviar al cliente</p>
+  <p class="sub">Marque los materiales y escriba la cantidad</p>
 
-  <!-- DATOS DEL CLIENTE -->
   <h2>👤 Datos del Cliente</h2>
   <div class="cliente">
-    <input type="text" id="nombre" placeholder="Nombre del cliente">
-    <input type="tel" id="telefono" placeholder="Teléfono / WhatsApp (ej: 573001234567)">
-    <input type="email" id="email" placeholder="Correo electrónico (opcional)">
-    <input type="text" id="obra" placeholder="Dirección / Nombre de la obra">
+    <input type="text" id="nombre" placeholder="Nombre del cliente" autocomplete="name">
+    <input type="tel" id="telefono" placeholder="WhatsApp (ej: 573001234567)" autocomplete="tel" inputmode="tel">
+    <input type="email" id="email" placeholder="Correo (opcional)" autocomplete="email" inputmode="email">
+    <input type="text" id="obra" placeholder="Dirección / Obra">
     <textarea id="notas" placeholder="Notas adicionales (opcional)"></textarea>
   </div>
 
-  <!-- TABLA DE MATERIALES -->
   <h2>📋 Materiales</h2>
-  <table id="tabla">
-    <thead>
-      <tr>
-        <th style="width:50px">✓</th>
-        <th>Material</th>
-        <th style="width:120px">Cantidad</th>
-      </tr>
-    </thead>
-    <tbody id="cuerpo"></tbody>
-  </table>
+  <div id="listaMateriales"></div>
+</div>
 
-  <div class="contador" id="contador">Materiales seleccionados: 0</div>
-
-  <div class="botones">
-    <button class="wa" onclick="enviarWhatsApp()">📱 Enviar por WhatsApp</button>
-    <button class="mail" onclick="enviarEmail()">✉️ Enviar por Email</button>
-    <button class="pdf" onclick="window.print()">🖨️ Imprimir / PDF</button>
-    <button class="reset" onclick="location.reload()">🔄 Limpiar</button>
-  </div>
+<div class="barra-fija">
+  <div class="contador" id="contador">Seleccionados: 0</div>
+  <button class="wa" onclick="enviarWhatsApp()">📱 <span class="txt-largo">WhatsApp</span></button>
+  <button class="mail" onclick="enviarEmail()">✉️ <span class="txt-largo">Email</span></button>
+  <button class="pdf" onclick="window.print()">🖨️ <span class="txt-largo">PDF</span></button>
+  <button class="reset" onclick="location.reload()" title="Limpiar">🔄</button>
 </div>
 
 <script>
@@ -116,56 +187,71 @@ const materiales = [
   "LAMPARA DE PARED"
 ];
 
-const cuerpo = document.getElementById('cuerpo');
+const cont = document.getElementById('listaMateriales');
+
 materiales.forEach((m, i) => {
-  const tr = document.createElement('tr');
-  tr.innerHTML = `
-    <td><input type="checkbox" data-idx="${i}" onchange="toggle(${i})"></td>
-    <td>${m}</td>
-    <td><input type="number" min="1" placeholder="0" id="cant-${i}" disabled></td>`;
-  cuerpo.appendChild(tr);
+  const div = document.createElement('div');
+  div.className = 'material';
+  div.id = `mat-${i}`;
+  div.innerHTML = `
+    <label class="chk-wrap">
+      <input type="checkbox" data-idx="${i}" onchange="toggle(${i})">
+    </label>
+    <div class="nombre">${m}</div>
+    <div class="cant-wrap">
+      <label>Cant.</label>
+      <input type="number" min="1" step="1" inputmode="numeric" pattern="[0-9]*"
+             placeholder="—" id="cant-${i}" disabled>
+    </div>
+  `;
+  cont.appendChild(div);
 });
 
 function toggle(i){
-  const chk = document.querySelector(`input[data-idx="${i}"]`);
+  const chk  = document.querySelector(`input[data-idx="${i}"]`);
   const cant = document.getElementById(`cant-${i}`);
+  const card = document.getElementById(`mat-${i}`);
+
   cant.disabled = !chk.checked;
+  card.classList.toggle('activo', chk.checked);
+
   if(!chk.checked){
-    cant.value = "";             // borra la cantidad al desmarcar
+    cant.value = "";
     cant.classList.remove('error');
   } else {
-    cant.focus();                // pone el cursor listo para escribir
+    // En móvil conviene NO abrir teclado automáticamente, solo enfocar
+    setTimeout(() => cant.focus(), 50);
   }
   actualizarContador();
 }
 
 function actualizarContador(){
   const n = document.querySelectorAll('input[type="checkbox"]:checked').length;
-  document.getElementById('contador').textContent = `Materiales seleccionados: ${n}`;
+  document.getElementById('contador').textContent = `Seleccionados: ${n}`;
 }
 
 function obtenerSeleccionados(){
   const lista = [];
-  let faltanCantidades = false;
+  let faltan = false;
 
   materiales.forEach((m, i) => {
-    const chk = document.querySelector(`input[data-idx="${i}"]`);
+    const chk  = document.querySelector(`input[data-idx="${i}"]`);
     const cant = document.getElementById(`cant-${i}`);
     cant.classList.remove('error');
 
     if(chk.checked){
-      const valor = cant.value.trim();
-      if(valor === "" || Number(valor) <= 0){
+      const v = cant.value.trim();
+      if(v === "" || Number(v) <= 0){
         cant.classList.add('error');
-        faltanCantidades = true;
+        faltan = true;
       } else {
-        lista.push({ material: m, cantidad: valor });
+        lista.push({ material: m, cantidad: v });
       }
     }
   });
 
-  if(faltanCantidades){
-    alert('⚠️ Hay materiales marcados sin cantidad. Por favor escriba la cantidad en los campos resaltados en rojo.');
+  if(faltan){
+    alert('⚠️ Faltan cantidades en los materiales marcados en rojo.');
     return null;
   }
   return lista;
@@ -173,7 +259,7 @@ function obtenerSeleccionados(){
 
 function validar(){
   const nombre = document.getElementById('nombre').value.trim();
-  if(!nombre){ alert('Por favor ingrese el nombre del cliente'); return null; }
+  if(!nombre){ alert('Ingrese el nombre del cliente'); return null; }
   const lista = obtenerSeleccionados();
   if(!lista) return null;
   if(lista.length === 0){ alert('Seleccione al menos un material'); return null; }
@@ -185,8 +271,8 @@ function construirMensaje(){
   if(!datos) return null;
 
   const telefono = document.getElementById('telefono').value.trim();
-  const obra = document.getElementById('obra').value.trim();
-  const notas = document.getElementById('notas').value.trim();
+  const obra     = document.getElementById('obra').value.trim();
+  const notas    = document.getElementById('notas').value.trim();
 
   let msg = `*LISTA DE MATERIALES ELÉCTRICOS*\n`;
   msg += `Cliente: ${datos.nombre}\n`;
@@ -206,9 +292,13 @@ function enviarWhatsApp(){
   const r = construirMensaje();
   if(!r) return;
   const tel = r.telefono.replace(/\D/g,'');
+  const texto = encodeURIComponent(r.msg);
+  // En móvil abre la app directamente, en PC abre WhatsApp Web
+  const esMovil = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   const url = tel
-    ? `https://wa.me/${tel}?text=${encodeURIComponent(r.msg)}`
-    : `https://wa.me/?text=${encodeURIComponent(r.msg)}`;
+    ? (esMovil ? `whatsapp://send?phone=${tel}&text=${texto}`
+               : `https://wa.me/${tel}?text=${texto}`)
+    : `https://wa.me/?text=${texto}`;
   window.open(url, '_blank');
 }
 
@@ -217,8 +307,7 @@ function enviarEmail(){
   if(!r) return;
   if(!r.email){ alert('Ingrese el correo del cliente'); return; }
   const asunto = `Lista de materiales eléctricos - ${r.datos.nombre}`;
-  const url = `mailto:${r.email}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(r.msg)}`;
-  window.location.href = url;
+  window.location.href = `mailto:${r.email}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(r.msg)}`;
 }
 </script>
 </body>
