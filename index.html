@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Lista de Materiales Eléctricos</title>
+<style>
+  * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+  body { background: #f0f4f8; margin: 0; padding: 20px; }
+  .container { max-width: 900px; margin: auto; background: #fff; padding: 25px;
+               border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,.1); }
+  h1 { color: #1e3a8a; text-align: center; margin-bottom: 5px; }
+  h2 { color: #334155; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; margin-top: 25px; }
+  .cliente { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
+  .cliente input, .cliente textarea { padding: 10px; border: 1px solid #cbd5e1;
+                                      border-radius: 6px; font-size: 14px; width: 100%; }
+  .cliente textarea { grid-column: span 2; resize: vertical; min-height: 60px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th, td { padding: 8px; border-bottom: 1px solid #e2e8f0; text-align: left; font-size: 14px; }
+  th { background: #1e3a8a; color: #fff; position: sticky; top: 0; }
+  tr:hover { background: #f1f5f9; }
+  input[type="checkbox"] { transform: scale(1.3); cursor: pointer; }
+  input[type="number"] { width: 70px; padding: 5px; border: 1px solid #cbd5e1;
+                         border-radius: 4px; text-align: center; }
+  input[type="number"]:disabled { background: #f1f5f9; }
+  input[type="number"].error { border-color: #dc2626; background: #fef2f2; }
+  .botones { display: flex; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
+  button { flex: 1; min-width: 180px; padding: 14px; border: none; border-radius: 8px;
+           font-size: 15px; font-weight: bold; cursor: pointer; transition: .2s; color: #fff; }
+  .wa { background: #25D366; } .wa:hover { background: #1ebe5a; }
+  .mail { background: #2563eb; } .mail:hover { background: #1d4ed8; }
+  .pdf { background: #dc2626; } .pdf:hover { background: #b91c1c; }
+  .reset { background: #64748b; } .reset:hover { background: #475569; }
+  .contador { text-align: right; font-weight: bold; color: #1e3a8a; margin-top: 8px; }
+  @media (max-width: 600px){ .cliente { grid-template-columns: 1fr; }
+                             .cliente textarea { grid-column: span 1; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>⚡ Lista de Materiales Eléctricos</h1>
+  <p style="text-align:center;color:#64748b">Marque los materiales y escriba la cantidad a enviar al cliente</p>
+
+  <!-- DATOS DEL CLIENTE -->
+  <h2>👤 Datos del Cliente</h2>
+  <div class="cliente">
+    <input type="text" id="nombre" placeholder="Nombre del cliente">
+    <input type="tel" id="telefono" placeholder="Teléfono / WhatsApp (ej: 573001234567)">
+    <input type="email" id="email" placeholder="Correo electrónico (opcional)">
+    <input type="text" id="obra" placeholder="Dirección / Nombre de la obra">
+    <textarea id="notas" placeholder="Notas adicionales (opcional)"></textarea>
+  </div>
+
+  <!-- TABLA DE MATERIALES -->
+  <h2>📋 Materiales</h2>
+  <table id="tabla">
+    <thead>
+      <tr>
+        <th style="width:50px">✓</th>
+        <th>Material</th>
+        <th style="width:120px">Cantidad</th>
+      </tr>
+    </thead>
+    <tbody id="cuerpo"></tbody>
+  </table>
+
+  <div class="contador" id="contador">Materiales seleccionados: 0</div>
+
+  <div class="botones">
+    <button class="wa" onclick="enviarWhatsApp()">📱 Enviar por WhatsApp</button>
+    <button class="mail" onclick="enviarEmail()">✉️ Enviar por Email</button>
+    <button class="pdf" onclick="window.print()">🖨️ Imprimir / PDF</button>
+    <button class="reset" onclick="location.reload()">🔄 Limpiar</button>
+  </div>
+</div>
+
+<script>
+const materiales = [
+  "TOMA CORRIENTES 110 V",
+  "TOMA CORRIENTE 220 V",
+  "CAJAS 2*4",
+  "CAJAS 4*4",
+  "TAPA CIEGAS 2*4",
+  "TAPA CIEGAS 4*4",
+  "TUBOS CONDUIT DE MEDIA encamisados",
+  "TUBOS CONDUIT ¾ encamisados",
+  "BRIDAS CONDUIT DE MEDIA METALICAS",
+  "BRIDAS CONDUIT ¾ METALICAS",
+  "CONECTORES CONDUIT DE MEDIA",
+  "CONECTORES CONDUIT 3/4",
+  "APAGADORES SENCILLOS",
+  "APAGADORES DOBLES",
+  "APAGADORES TRIPLE",
+  "APAGADOR MIXTO",
+  "APAGADOR MIXTO CONMUTADO",
+  "APAGADOR MIXTO DOBLE",
+  "APAGADOR CONMUTADO SENCILLO",
+  "APAGADOR CONMUTADO DOBLE",
+  "APAGADOR CONMUTADO DE 4 VIAS",
+  "CURVAS CONDUIT DE MEDIA",
+  "CURVAS CONDUIT ¾",
+  "TEYPE MARCA 3M",
+  "ALAMBRE N° 10 COLOR BLANCO",
+  "ALAMBRE N° 10 COLOR NEGRO",
+  "ALAMBRE N° 12 COLOR VERDE",
+  "ALAMBRE N° 12 COLOR ROJO",
+  "ALAMBRE N° 12 COLOR AZUL",
+  "VARILLA DE COBRE PUESTA A TIERRA",
+  "CENTRO DE CARGA",
+  "CEPOS DE PLATO",
+  "BUJIAS",
+  "OJOS DE BUEY",
+  "BREAKER DE 15 A",
+  "BREAKER DE 20 A",
+  "BREAKER DE 30 A",
+  "BREAKER DE 40 A",
+  "LAMPARA DE PARED"
+];
+
+const cuerpo = document.getElementById('cuerpo');
+materiales.forEach((m, i) => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="checkbox" data-idx="${i}" onchange="toggle(${i})"></td>
+    <td>${m}</td>
+    <td><input type="number" min="1" placeholder="0" id="cant-${i}" disabled></td>`;
+  cuerpo.appendChild(tr);
+});
+
+function toggle(i){
+  const chk = document.querySelector(`input[data-idx="${i}"]`);
+  const cant = document.getElementById(`cant-${i}`);
+  cant.disabled = !chk.checked;
+  if(!chk.checked){
+    cant.value = "";             // borra la cantidad al desmarcar
+    cant.classList.remove('error');
+  } else {
+    cant.focus();                // pone el cursor listo para escribir
+  }
+  actualizarContador();
+}
+
+function actualizarContador(){
+  const n = document.querySelectorAll('input[type="checkbox"]:checked').length;
+  document.getElementById('contador').textContent = `Materiales seleccionados: ${n}`;
+}
+
+function obtenerSeleccionados(){
+  const lista = [];
+  let faltanCantidades = false;
+
+  materiales.forEach((m, i) => {
+    const chk = document.querySelector(`input[data-idx="${i}"]`);
+    const cant = document.getElementById(`cant-${i}`);
+    cant.classList.remove('error');
+
+    if(chk.checked){
+      const valor = cant.value.trim();
+      if(valor === "" || Number(valor) <= 0){
+        cant.classList.add('error');
+        faltanCantidades = true;
+      } else {
+        lista.push({ material: m, cantidad: valor });
+      }
+    }
+  });
+
+  if(faltanCantidades){
+    alert('⚠️ Hay materiales marcados sin cantidad. Por favor escriba la cantidad en los campos resaltados en rojo.');
+    return null;
+  }
+  return lista;
+}
+
+function validar(){
+  const nombre = document.getElementById('nombre').value.trim();
+  if(!nombre){ alert('Por favor ingrese el nombre del cliente'); return null; }
+  const lista = obtenerSeleccionados();
+  if(!lista) return null;
+  if(lista.length === 0){ alert('Seleccione al menos un material'); return null; }
+  return { nombre, lista };
+}
+
+function construirMensaje(){
+  const datos = validar();
+  if(!datos) return null;
+
+  const telefono = document.getElementById('telefono').value.trim();
+  const obra = document.getElementById('obra').value.trim();
+  const notas = document.getElementById('notas').value.trim();
+
+  let msg = `*LISTA DE MATERIALES ELÉCTRICOS*\n`;
+  msg += `Cliente: ${datos.nombre}\n`;
+  if(obra) msg += `Obra: ${obra}\n`;
+  msg += `Fecha: ${new Date().toLocaleDateString()}\n`;
+  msg += `--------------------------------\n\n`;
+  datos.lista.forEach((it, i) => {
+    msg += `${i+1}. ${it.material} — *${it.cantidad}* und\n`;
+  });
+  msg += `\n--------------------------------\n`;
+  msg += `Total de ítems: ${datos.lista.length}\n`;
+  if(notas) msg += `\nObservaciones: ${notas}`;
+  return { msg, telefono, email: document.getElementById('email').value.trim(), datos };
+}
+
+function enviarWhatsApp(){
+  const r = construirMensaje();
+  if(!r) return;
+  const tel = r.telefono.replace(/\D/g,'');
+  const url = tel
+    ? `https://wa.me/${tel}?text=${encodeURIComponent(r.msg)}`
+    : `https://wa.me/?text=${encodeURIComponent(r.msg)}`;
+  window.open(url, '_blank');
+}
+
+function enviarEmail(){
+  const r = construirMensaje();
+  if(!r) return;
+  if(!r.email){ alert('Ingrese el correo del cliente'); return; }
+  const asunto = `Lista de materiales eléctricos - ${r.datos.nombre}`;
+  const url = `mailto:${r.email}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(r.msg)}`;
+  window.location.href = url;
+}
+</script>
+</body>
+</html>
