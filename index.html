@@ -322,6 +322,14 @@ const categorias = [
     ]
   },
   {
+    nombre: "🔩 Tornillería y Fijación",
+    materiales: [
+      "TORNILLOS FRIJOLITOS",
+      "PUNTA BROKA",
+      "ARANDELAS"
+    ]
+  },
+  {
     nombre: "🚿 PVC / Plomería",
     materiales: [
       "CINTA DE TEFLON",
@@ -352,7 +360,6 @@ const categorias = [
 
 /* Índice global plano para acceder por número */
 let materiales = [];
-let indicesPorMaterial = {};
 
 const cont = document.getElementById('listaCategorias');
 
@@ -469,7 +476,6 @@ function filtrar(){
     const el = document.getElementById(`mat-${i}`);
     el.classList.toggle('oculto', q !== '' && !m.toLowerCase().includes(q));
   });
-  // Si hay búsqueda, abrir todas las categorías
   if(q !== '') abrirTodas();
 }
 
@@ -522,7 +528,6 @@ function enviarWhatsApp(destino){
   msg += `\n--------------------------------\n`;
   msg += `Total de items: ${lista.length}\n\n`;
 
-  /* Diferencia según destino */
   if(destino === 'ferreteria'){
     msg += `*SOLICITUD PARA COTIZAR / DESPACHAR*\n`;
     msg += `--------------------------------\n`;
