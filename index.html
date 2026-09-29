@@ -9,7 +9,7 @@
   * { box-sizing: border-box; font-family: -apple-system, 'Segoe UI', Roboto, sans-serif;
       -webkit-tap-highlight-color: transparent; }
   html, body { margin: 0; padding: 0; background: #f0f4f8; }
-  body { padding: 12px 12px 100px; font-size: 16px; }
+  body { padding: 12px 12px 140px; font-size: 16px; }
 
   .container { max-width: 700px; margin: auto; background: #fff; padding: 16px;
                border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
@@ -38,38 +38,107 @@
   }
   .acciones-top button:active { background: #e2e8f0; }
 
+  /* ==== CATEGORÍAS ==== */
+  .categoria {
+    margin-bottom: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .cat-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px;
+    background: #f8fafc;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+    color: #1e293b;
+    user-select: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .cat-header:active { background: #e2e8f0; }
+  .cat-header .flecha { transition: .2s; font-size: 12px; color: #64748b; }
+  .categoria.abierta .cat-header .flecha { transform: rotate(90deg); }
+  .cat-header .badge {
+    background: #25D366; color: #fff;
+    font-size: 11px; padding: 2px 8px; border-radius: 10px;
+    margin-left: 8px; font-weight: bold;
+  }
+  .cat-contenido { display: none; padding: 8px; }
+  .categoria.abierta .cat-contenido { display: block; }
+
   /* ==== MATERIALES ==== */
   .material {
-    display: flex; align-items: center; gap: 10px;
-    padding: 11px 12px; margin-bottom: 7px;
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 12px; margin-bottom: 8px;
     border: 1px solid #e2e8f0; border-radius: 10px;
     background: #fff; transition: .15s;
   }
   .material.activo { border-color: #25D366; background: #f0fdf4; }
   .material.oculto { display: none; }
 
+  .fila-sup { display: flex; align-items: center; gap: 10px; }
+
   .chk-wrap { display: flex; align-items: center; justify-content: center;
               min-width: 32px; height: 32px; }
   .chk-wrap input[type="checkbox"] {
-    width: 24px; height: 24px; cursor: pointer; accent-color: #25D366;
+    width: 26px; height: 26px; cursor: pointer; accent-color: #25D366;
   }
   .nombre { flex: 1; font-size: 15px; color: #1e293b; line-height: 1.25; }
 
-  .cant-wrap { display: flex; flex-direction: column; align-items: center; min-width: 72px; }
-  .cant-wrap label { font-size: 9px; color: #64748b; text-transform: uppercase; margin-bottom: 2px; }
-  .cant-wrap input[type="number"] {
-    width: 72px; padding: 10px 4px; border: 1px solid #cbd5e1; border-radius: 8px;
-    text-align: center; font-size: 16px; font-weight: bold; background: #f8fafc;
-    -moz-appearance: textfield;
+  /* ==== FILA DE CONTADOR ==== */
+  .contador-fila {
+    display: none;
+    align-items: center;
+    gap: 6px;
   }
-  .cant-wrap input[type="number"]::-webkit-outer-spin-button,
-  .cant-wrap input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none; margin: 0;
+  .material.activo .contador-fila { display: flex; }
+
+  .btn-menos, .btn-mas, .btn-mas5 {
+    padding: 16px 8px;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .1s;
+    flex: 1;
   }
-  .cant-wrap input:disabled { background: #f1f5f9; color: #94a3b8; }
-  .cant-wrap input:enabled { background: #fff; border-color: #25D366; }
-  .cant-wrap input.error { border-color: #dc2626; background: #fef2f2; }
-  .cant-wrap input:enabled:focus { outline: none; box-shadow: 0 0 0 3px rgba(37,211,102,.2); }
+  .btn-menos { background: #ef4444; box-shadow: 0 3px 0 #b91c1c; }
+  .btn-menos:active { transform: translateY(2px); box-shadow: 0 1px 0 #b91c1c; background: #dc2626; }
+  .btn-mas { background: #25D366; box-shadow: 0 3px 0 #1a9e4d; }
+  .btn-mas:active { transform: translateY(2px); box-shadow: 0 1px 0 #1a9e4d; background: #1ebe5a; }
+  .btn-mas5 { background: #0891b2; box-shadow: 0 3px 0 #075985; }
+  .btn-mas5:active { transform: translateY(2px); box-shadow: 0 1px 0 #075985; background: #0e7490; }
+
+  .caja-total {
+    min-width: 70px;
+    padding: 15px 8px;
+    background: #fff;
+    border: 2px solid #25D366;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #166534;
+  }
+  .caja-total.vacio { color: #cbd5e1; }
+  .caja-total.error { border-color: #dc2626; background: #fef2f2; }
+
+  .btn-reset {
+    padding: 14px 10px;
+    border: none;
+    border-radius: 10px;
+    background: #f1f5f9;
+    color: #64748b;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .1s;
+  }
+  .btn-reset:active { background: #e2e8f0; transform: scale(.95); }
 
   /* ==== BARRA FIJA ==== */
   .barra-fija {
@@ -79,12 +148,22 @@
     box-shadow: 0 -3px 12px rgba(0,0,0,.08);
   }
   .contador { text-align: center; font-size: 12px; color: #64748b; margin-bottom: 6px; }
+  .fila-botones { display: flex; gap: 8px; }
   .btn-enviar {
-    width: 100%; padding: 16px; border: none; border-radius: 10px;
-    background: #25D366; color: #fff; font-size: 17px; font-weight: bold;
-    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+    flex: 1;
+    padding: 15px 8px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+    color: #fff;
   }
-  .btn-enviar:active { transform: scale(.98); background: #1ebe5a; }
+  .btn-cliente { background: #25D366; }
+  .btn-cliente:active { transform: scale(.98); background: #1ebe5a; }
+  .btn-ferreteria { background: #2563eb; }
+  .btn-ferreteria:active { transform: scale(.98); background: #1d4ed8; }
 
   /* ==== TOAST ==== */
   .toast {
@@ -97,7 +176,8 @@
 
   @media print {
     body { padding: 0; }
-    .barra-fija, .buscador, .acciones-top, .sub, .chk-wrap, .cant-wrap label { display: none !important; }
+    .barra-fija, .buscador, .acciones-top, .sub, .chk-wrap, .contador-fila, .cat-header { display: none !important; }
+    .cat-contenido { display: block !important; }
     .material { border: 1px solid #ccc; }
   }
 </style>
@@ -105,7 +185,7 @@
 <body>
 <div class="container">
   <h1>⚡ Lista de Materiales</h1>
-  <p class="sub">Marque lo que necesita y escriba la cantidad</p>
+  <p class="sub">Marca el material y usa +1, +5 o −1 para la cantidad</p>
 
   <div class="cliente">
     <input type="text" id="nombre" placeholder="👤 Nombre del cliente" autocomplete="name">
@@ -117,110 +197,264 @@
          oninput="filtrar()">
 
   <div class="acciones-top">
-    <button onclick="marcarTodo(true)">✓ Marcar todo</button>
-    <button onclick="marcarTodo(false)">✗ Limpiar</button>
+    <button onclick="abrirTodas()">▼ Abrir todo</button>
+    <button onclick="cerrarTodas()">▲ Cerrar todo</button>
+    <button onclick="limpiarTodo()">✗ Limpiar</button>
   </div>
 
-  <div id="listaMateriales"></div>
+  <div id="listaCategorias"></div>
 </div>
 
 <div class="barra-fija">
   <div class="contador" id="contador">Seleccionados: 0</div>
-  <button class="btn-enviar" onclick="enviarWhatsApp()">
-    📱 Enviar lista por WhatsApp
-  </button>
+  <div class="fila-botones">
+    <button class="btn-enviar btn-cliente" onclick="enviarWhatsApp('cliente')">
+      📱 Enviar al Cliente
+    </button>
+    <button class="btn-enviar btn-ferreteria" onclick="enviarWhatsApp('ferreteria')">
+      🏪 Enviar a Ferretería
+    </button>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const materiales = [
-  "TOMA CORRIENTES 110 V",
-  "TOMA CORRIENTE 220 V",
-  "CAJAS 2*4",
-  "CAJAS 4*4",
-  "TAPA CIEGAS 2*4",
-  "TAPA CIEGAS 4*4",
-  "TUBOS CONDUIT DE MEDIA ECAMISADOS",
-  "TUBOS CONDUIT ¾ ENCAMISADOS",
-  "UNIONES CONDUIT DE MEDIA",
-  "UNIONES CONDUIT ¾",
-  "BRIDAS CONDUIT DE MEDIA METALICAS",
-  "BRIDAS CONDUIT ¾ METALICAS",
-  "CONECTORES CONDUIT DE MEDIA",
-  "CONECTORES CONDUIT ¾",
-  "APAGADORES SENCILLOS",
-  "APAGADORES DOBLES",
-  "APAGADORES TRIPLE",
-  "APAGADOR MIXTO",
-  "APAGADOR MIXTO CONMUTADO",
-  "APAGADOR MIXTO DOBLE",
-  "APAGADOR CONMUTADO SENCILLO",
-  "APAGADOR CONMUTADO DOBLE",
-  "APAGADOR CONMUTADO DE 4 VIAS",
-  "CURVAS CONDUIT DE MEDIA",
-  "CURVAS CONDUIT ¾",
-  "TEYPE MARCA 3M",
-  "ALAMBRE N° 10 CAJA COLOR BLANCO",
-  "ALAMBRE N° 10 CAJA COLOR NEGRO",
-  "ALAMBRE N° 12 CAJA COLOR VERDE",
-  "ALAMBRE N° 12 CAJA COLOR ROJO",
-  "ALAMBRE N° 12 CAJA COLOR AZUL",
-  "VARILLA DE COBRE PUESTA A TIERRA",
-  "CENTRO DE CARGA",
-  "CEPOS DE PLATO",
-  "BUJIAS",
-  "OJOS DE BUEY",
-  "BREAKER DE 15 A",
-  "BREAKER DE 20 A",
-  "BREAKER DE 30 A",
-  "BREAKER DE 40 A",
-  "BREAKER DE 100 A PARA SERVICIO 220",
-  "ABANICO DE PARED",
-  "ABANICO DE TECHO",
-  "ABANICO BLUETOOTH",
-  "LAMPARA DE PARED"
+/* =========================================================
+   ✏️ EDITA AQUÍ TUS DATOS (aparecen al final del mensaje)
+   ========================================================= */
+const MI_NOMBRE    = "Ing. [TU NOMBRE]";        // ← cambia esto
+const MI_TELEFONO  = "+505 8888-8888";           // ← cambia esto
+const MI_EMPRESA   = "";                          // ← opcional, ej: "Electricidad XYZ"
+
+/* =========================================================
+   LISTA DE MATERIALES POR CATEGORÍA
+   ========================================================= */
+const categorias = [
+  {
+    nombre: "⚡ Eléctrico - Cajas y Tomas",
+    materiales: [
+      "TOMA CORRIENTES 110 V",
+      "TOMA CORRIENTE 220 V",
+      "CAJAS 2*4",
+      "CAJAS 4*4",
+      "TAPA CIEGAS 2*4",
+      "TAPA CIEGAS 4*4",
+      "CEPOS DE PLATO"
+    ]
+  },
+  {
+    nombre: "🔌 Eléctrico - Tubería Conduit",
+    materiales: [
+      "TUBOS CONDUIT DE MEDIA ECAMISADOS",
+      "TUBOS CONDUIT 3/4 ENCAMISADOS",
+      "UNIONES CONDUIT DE MEDIA",
+      "UNIONES CONDUIT 3/4",
+      "BRIDAS CONDUIT DE MEDIA METALICAS",
+      "BRIDAS CONDUIT 3/4 METALICAS",
+      "CONECTORES CONDUIT DE MEDIA",
+      "CONECTORES CONDUIT 3/4",
+      "CURVAS CONDUIT DE MEDIA",
+      "CURVAS CONDUIT 3/4"
+    ]
+  },
+  {
+    nombre: "💡 Eléctrico - Apagadores",
+    materiales: [
+      "APAGADORES SENCILLOS",
+      "APAGADORES DOBLES",
+      "APAGADORES TRIPLE",
+      "APAGADOR MIXTO",
+      "APAGADOR MIXTO CONMUTADO",
+      "APAGADOR MIXTO DOBLE",
+      "APAGADOR CONMUTADO SENCILLO",
+      "APAGADOR CONMUTADO DOBLE",
+      "APAGADOR CONMUTADO DE 4 VIAS"
+    ]
+  },
+  {
+    nombre: "🔋 Eléctrico - Cables",
+    materiales: [
+      "ALAMBRE N° 10 CAJA COLOR BLANCO",
+      "ALAMBRE N° 10 CAJA COLOR NEGRO",
+      "ALAMBRE N° 12 CAJA COLOR VERDE",
+      "ALAMBRE N° 12 CAJA COLOR ROJO",
+      "ALAMBRE N° 12 CAJA COLOR AZUL",
+      "VARILLA DE COBRE PUESTA A TIERRA",
+      "TEYPE MARCA 3M"
+    ]
+  },
+  {
+    nombre: "⚙️ Eléctrico - Centros y Breakers",
+    materiales: [
+      "CENTRO DE CARGA DE 2 ESPACIOS",
+      "CENTRO DE CARGA DE 4 ESPACIOS",
+      "CENTRO DE CARGA DE 6 ESPACIOS",
+      "CENTRO DE CARGA DE 8 ESPACIOS",
+      "CENTRO DE CARGA DE 12 ESPACIOS",
+      "CENTRO DE CARGA DE 16 ESPACIOS",
+      "CENTRO DE CARGA DE 20 ESPACIOS",
+      "CENTRO DE CARGA DE 24 ESPACIOS",
+      "CENTRO DE CARGA DE 30 ESPACIOS",
+      "CENTRO DE CARGA DE 40 ESPACIOS",
+      "CENTRO DE CARGA DE 42 ESPACIOS",
+      "BREAKER DE 15 A",
+      "BREAKER DE 20 A",
+      "BREAKER DE 30 A",
+      "BREAKER DE 40 A",
+      "BREAKER DE 100 A PARA SERVICIO 220"
+    ]
+  },
+  {
+    nombre: "💡 Iluminación",
+    materiales: [
+      "BUJIAS",
+      "OJOS DE BUEY",
+      "LAMPARA DE PARED"
+    ]
+  },
+  {
+    nombre: "🌀 Abanicos",
+    materiales: [
+      "ABANICO DE PARED",
+      "ABANICO DE TECHO",
+      "ABANICO BLUETOOTH"
+    ]
+  },
+  {
+    nombre: "🚿 PVC / Plomería",
+    materiales: [
+      "CINTA DE TEFLON",
+      "PEGAMENTO PVC",
+      "LIMPIADOR PARA PVC",
+      "SOLDADURA DE ESTAÑO Y PASTA PARA SOLDAR",
+      "CODOS DE PVC",
+      "CODOS DE 1/2 PULGADA",
+      "CODOS DE 1 PULGADA ALTA PRESION",
+      "CODOS DE 1 1/2 PULGADA ALTA",
+      "CODOS DE 2 PULGADAS ALTA PRESION",
+      "CODOS DE PVC DE 1/2 PULGADA ALTA PRESION",
+      "TE (T) DE 1/2 PULGADA ALTA PRESION",
+      "TE (T) DE 1 PULGADA ALTA PRESION",
+      "TE (T) DE 1 1/2 PULGADA ALTA PRESION",
+      "TE (T) DE 2 PULGADAS ALTA PRESION",
+      "UNIONES PVC DE 1/2 PULGADA ALTA PRESION",
+      "UNIONES PVC DE 1 PULGADA ALTA PRESION",
+      "UNIONES PVC DE 1 1/2 PULGADA ALTA PRESION",
+      "UNIONES PVC DE 2 PULGADAS ALTA PRESION",
+      "MANGUERAS DE ABASTO (PARA INODORO O LAVAMANOS)",
+      "LLAVES DE PASE (LLAVES DE ANGULO)",
+      "FLANYER",
+      "ANILLO DE CERA (PARA EL INODORO)"
+    ]
+  }
 ];
 
-const cont = document.getElementById('listaMateriales');
+/* Índice global plano para acceder por número */
+let materiales = [];
+let indicesPorMaterial = {};
 
-materiales.forEach((m, i) => {
-  const div = document.createElement('div');
-  div.className = 'material';
-  div.id = `mat-${i}`;
-  div.dataset.nombre = m.toLowerCase();
-  div.innerHTML = `
-    <label class="chk-wrap">
-      <input type="checkbox" data-idx="${i}" onchange="toggle(${i})">
-    </label>
-    <div class="nombre">${m}</div>
-    <div class="cant-wrap">
-      <label>Cant.</label>
-      <input type="number" min="1" step="1" inputmode="numeric" pattern="[0-9]*"
-             placeholder="—" id="cant-${i}" disabled>
+const cont = document.getElementById('listaCategorias');
+
+categorias.forEach((cat, catIdx) => {
+  const catDiv = document.createElement('div');
+  catDiv.className = 'categoria';
+  catDiv.id = `cat-${catIdx}`;
+
+  const totalCat = cat.materiales.length;
+
+  let materialesHTML = '';
+  cat.materiales.forEach(m => {
+    const globalIdx = materiales.length;
+    materiales.push(m);
+
+    materialesHTML += `
+      <div class="material" id="mat-${globalIdx}" data-nombre="${m.toLowerCase()}">
+        <div class="fila-sup">
+          <label class="chk-wrap">
+            <input type="checkbox" data-idx="${globalIdx}" onchange="toggle(${globalIdx})">
+          </label>
+          <div class="nombre">${m}</div>
+        </div>
+
+        <div class="contador-fila">
+          <button class="btn-menos" onclick="cambiar(${globalIdx}, -1)">−1</button>
+          <div class="caja-total vacio" id="cant-${globalIdx}">0</div>
+          <button class="btn-mas" onclick="cambiar(${globalIdx}, 1)">+1</button>
+          <button class="btn-mas5" onclick="cambiar(${globalIdx}, 5)">+5</button>
+          <button class="btn-reset" onclick="resetCant(${globalIdx})" title="Reiniciar">🗑️</button>
+        </div>
+      </div>
+    `;
+  });
+
+  catDiv.innerHTML = `
+    <div class="cat-header" onclick="toggleCategoria(${catIdx})">
+      <span>${cat.nombre} <span class="badge">${totalCat}</span></span>
+      <span class="flecha">▶</span>
+    </div>
+    <div class="cat-contenido">
+      ${materialesHTML}
     </div>
   `;
-  cont.appendChild(div);
+
+  cont.appendChild(catDiv);
 });
+
+/* Abrir la primera categoría por defecto */
+document.getElementById('cat-0').classList.add('abierta');
 
 /* Cargar datos guardados */
 cargarEstado();
 
+/* ==== CATEGORÍAS ==== */
+function toggleCategoria(idx){
+  document.getElementById(`cat-${idx}`).classList.toggle('abierta');
+}
+function abrirTodas(){
+  categorias.forEach((c, i) => document.getElementById(`cat-${i}`).classList.add('abierta'));
+}
+function cerrarTodas(){
+  categorias.forEach((c, i) => document.getElementById(`cat-${i}`).classList.remove('abierta'));
+}
+function limpiarTodo(){
+  if(!confirm('¿Borrar todo y empezar de cero?')) return;
+  localStorage.removeItem('listaMateriales');
+  location.reload();
+}
+
+/* ==== MATERIALES ==== */
 function toggle(i){
   const chk  = document.querySelector(`input[data-idx="${i}"]`);
-  const cant = document.getElementById(`cant-${i}`);
   const card = document.getElementById(`mat-${i}`);
-
-  cant.disabled = !chk.checked;
+  const caja = document.getElementById(`cant-${i}`);
   card.classList.toggle('activo', chk.checked);
-
   if(!chk.checked){
-    cant.value = "";
-    cant.classList.remove('error');
-  } else {
-    setTimeout(() => cant.focus(), 50);
+    caja.textContent = "0";
+    caja.classList.add('vacio');
+    caja.classList.remove('error');
   }
   actualizarContador();
+  guardarEstado();
+}
+
+function cambiar(i, delta){
+  const caja = document.getElementById(`cant-${i}`);
+  let actual = Number(caja.textContent) || 0;
+  actual += delta;
+  if(actual < 0) actual = 0;
+  caja.textContent = actual;
+  if(actual === 0) caja.classList.add('vacio');
+  else caja.classList.remove('vacio');
+  caja.classList.remove('error');
+  guardarEstado();
+}
+
+function resetCant(i){
+  const caja = document.getElementById(`cant-${i}`);
+  caja.textContent = "0";
+  caja.classList.add('vacio');
+  caja.classList.remove('error');
   guardarEstado();
 }
 
@@ -235,31 +469,24 @@ function filtrar(){
     const el = document.getElementById(`mat-${i}`);
     el.classList.toggle('oculto', q !== '' && !m.toLowerCase().includes(q));
   });
+  // Si hay búsqueda, abrir todas las categorías
+  if(q !== '') abrirTodas();
 }
 
-function marcarTodo(estado){
-  materiales.forEach((m, i) => {
-    const chk = document.querySelector(`input[data-idx="${i}"]`);
-    if(chk.checked !== estado){
-      chk.checked = estado;
-      toggle(i);
-    }
-  });
-}
-
+/* ==== OBTENER SELECCIONADOS ==== */
 function obtenerSeleccionados(){
   const lista = [];
   let faltan = false;
 
   materiales.forEach((m, i) => {
     const chk  = document.querySelector(`input[data-idx="${i}"]`);
-    const cant = document.getElementById(`cant-${i}`);
-    cant.classList.remove('error');
+    const caja = document.getElementById(`cant-${i}`);
+    caja.classList.remove('error');
 
     if(chk.checked){
-      const v = cant.value.trim();
-      if(v === "" || Number(v) <= 0){
-        cant.classList.add('error');
+      const v = Number(caja.textContent) || 0;
+      if(v <= 0){
+        caja.classList.add('error');
         faltan = true;
       } else {
         lista.push({ material: m, cantidad: v });
@@ -268,13 +495,14 @@ function obtenerSeleccionados(){
   });
 
   if(faltan){
-    mostrarToast('⚠️ Faltan cantidades en rojo');
+    mostrarToast('⚠️ Faltan cantidades (toca +1)');
     return null;
   }
   return lista;
 }
 
-function enviarWhatsApp(){
+/* ==== ENVIAR POR WHATSAPP ==== */
+function enviarWhatsApp(destino){
   const nombre = document.getElementById('nombre').value.trim();
   const telefono = document.getElementById('telefono').value.trim();
 
@@ -284,8 +512,7 @@ function enviarWhatsApp(){
   if(!lista) return;
   if(lista.length === 0){ mostrarToast('⚠️ Marca al menos un material'); return; }
 
-  // Construir mensaje
-  let msg = `*LISTA DE MATERIALES ELÉCTRICOS*\n`;
+  let msg = `*LISTA DE MATERIALES*\n`;
   msg += `Cliente: ${nombre}\n`;
   msg += `Fecha: ${new Date().toLocaleDateString()}\n`;
   msg += `--------------------------------\n\n`;
@@ -293,13 +520,24 @@ function enviarWhatsApp(){
     msg += `${i+1}. ${it.material}\n     Cantidad: *${it.cantidad}*\n`;
   });
   msg += `\n--------------------------------\n`;
-  msg += `Total de ítems: ${lista.length}\n\n`;
-  msg += `_Lista enviada por WhatsApp_`;
+  msg += `Total de items: ${lista.length}\n\n`;
+
+  /* Diferencia según destino */
+  if(destino === 'ferreteria'){
+    msg += `*SOLICITUD PARA COTIZAR / DESPACHAR*\n`;
+    msg += `--------------------------------\n`;
+    if(MI_EMPRESA) msg += `Empresa: ${MI_EMPRESA}\n`;
+    msg += `Solicita: ${MI_NOMBRE}\n`;
+    msg += `Tel: ${MI_TELEFONO}\n`;
+  } else {
+    msg += `_Lista preparada por:_\n`;
+    if(MI_EMPRESA) msg += `_${MI_EMPRESA}_\n`;
+    msg += `_${MI_NOMBRE}_\n`;
+    msg += `_Tel: ${MI_TELEFONO}_`;
+  }
 
   const texto = encodeURIComponent(msg);
   const tel = telefono.replace(/\D/g,'');
-
-  // Detectar móvil
   const esMovil = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   let url;
@@ -311,9 +549,8 @@ function enviarWhatsApp(){
     url = `https://wa.me/?text=${texto}`;
   }
 
-  mostrarToast('✅ Abriendo WhatsApp...');
+  mostrarToast(destino === 'ferreteria' ? '🏪 Enviando a ferretería...' : '✅ Abriendo WhatsApp...');
   window.open(url, '_blank');
-
   guardarEstado();
 }
 
@@ -336,9 +573,9 @@ function guardarEstado(){
   };
   materiales.forEach((m, i) => {
     const chk = document.querySelector(`input[data-idx="${i}"]`);
-    const cant = document.getElementById(`cant-${i}`);
-    if(chk.checked){
-      estado.materiales[i] = cant.value;
+    const caja = document.getElementById(`cant-${i}`);
+    if(chk && chk.checked){
+      estado.materiales[i] = Number(caja.textContent) || 0;
     }
   });
   try { localStorage.setItem('listaMateriales', JSON.stringify(estado)); } catch(e){}
@@ -353,12 +590,13 @@ function cargarEstado(){
     document.getElementById('telefono').value = estado.telefono || '';
 
     Object.keys(estado.materiales || {}).forEach(i => {
-      const chk = document.querySelector(`input[data-idx="${i}"]`);
-      const cant = document.getElementById(`cant-${i}`);
+      const chk  = document.querySelector(`input[data-idx="${i}"]`);
+      const caja = document.getElementById(`cant-${i}`);
       if(chk){
         chk.checked = true;
-        cant.disabled = false;
-        cant.value = estado.materiales[i];
+        const v = Number(estado.materiales[i]) || 0;
+        caja.textContent = v;
+        if(v > 0) caja.classList.remove('vacio');
         document.getElementById(`mat-${i}`).classList.add('activo');
       }
     });
@@ -366,12 +604,8 @@ function cargarEstado(){
   } catch(e){}
 }
 
-/* Guardar automáticamente al escribir */
 document.getElementById('nombre').addEventListener('input', guardarEstado);
 document.getElementById('telefono').addEventListener('input', guardarEstado);
-document.addEventListener('input', e => {
-  if(e.target.matches('input[type="number"]')) guardarEstado();
-});
 </script>
 </body>
 </html>
