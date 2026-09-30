@@ -281,6 +281,7 @@ const categorias = [
       "ALAMBRE N° 12 CAJA COLOR ROJO",
       "ALAMBRE N° 12 CAJA COLOR AZUL",
       "VARILLA DE COBRE PUESTA A TIERRA",
+     "ALAMBRES NUMERO 8 CANTIDAD EN METROS",
       "TEYPE MARCA 3M"
     ]
   },
@@ -309,6 +310,7 @@ const categorias = [
     nombre: "💡 Iluminación",
     materiales: [
       "BUJIAS",
+     "CEPOS DE PLATO",
       "OJOS DE BUEY",
       "LAMPARA DE PARED"
     ]
@@ -324,9 +326,14 @@ const categorias = [
   {
     nombre: "🔩 Tornillería y Fijación",
     materiales: [
-      "TORNILLOS FRIJOLITOS",
-      "PUNTA BROKA",
-      "ARANDELAS"
+      "TORNILLOS FRIJOLITOS ARANDELADOS PUNTA BROKA",
+      "TORNILLOS FRIJOLITOS ARANDELADOS PUNTA FINA",
+      "TORNILLOS JIPSON PUNTA FINA 1 PULGADA",
+      "TORNILLOS JIPSON PUNTA FINA 2 PULGADAS",
+      "TORNILLOS JIPSON PUNTA FINA 3 PULGADAS",
+      "TORNILLOS JIPSON PUNTA BROKA 1 PULGADA",
+      "TORNILLOS JIPSON PUNTA BROKA 2 PULGADAS",
+      "TORNILLOS JIPSON PUNTA BROKA 3 PULGADAS"
     ]
   },
   {
@@ -336,7 +343,7 @@ const categorias = [
       "PEGAMENTO PVC",
       "LIMPIADOR PARA PVC",
       "SOLDADURA DE ESTAÑO Y PASTA PARA SOLDAR",
-      "CODOS DE PVC",
+      "CODOS DE PVC A 45°",
       "CODOS DE 1/2 PULGADA",
       "CODOS DE 1 PULGADA ALTA PRESION",
       "CODOS DE 1 1/2 PULGADA ALTA",
@@ -518,27 +525,48 @@ function enviarWhatsApp(destino){
   if(!lista) return;
   if(lista.length === 0){ mostrarToast('⚠️ Marca al menos un material'); return; }
 
-  let msg = `*LISTA DE MATERIALES*\n`;
-  msg += `Cliente: ${nombre}\n`;
-  msg += `Fecha: ${new Date().toLocaleDateString()}\n`;
-  msg += `--------------------------------\n\n`;
-  lista.forEach((it, i) => {
-    msg += `${i+1}. ${it.material}\n     Cantidad: *${it.cantidad}*\n`;
-  });
-  msg += `\n--------------------------------\n`;
-  msg += `Total de items: ${lista.length}\n\n`;
+  const fecha = new Date().toLocaleDateString();
+  let msg = "";
 
   if(destino === 'ferreteria'){
-    msg += `*SOLICITUD PARA COTIZAR / DESPACHAR*\n`;
-    msg += `--------------------------------\n`;
-    if(MI_EMPRESA) msg += `Empresa: ${MI_EMPRESA}\n`;
-    msg += `Solicita: ${MI_NOMBRE}\n`;
-    msg += `Tel: ${MI_TELEFONO}\n`;
+    /* ====== FORMATO DETALLADO PARA LA FERRETERÍA ====== */
+    msg += `⚡ *LISTA DE MATERIALES ELÉCTRICOS*\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `👤 *Cliente:* ${nombre}\n`;
+    msg += `📅 *Fecha:* ${fecha}\n`;
+    msg += `📦 *Total items:* ${lista.length}\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+
+    lista.forEach((it, i) => {
+      const num = String(i+1).padStart(2, '0');
+      msg += `*${num}.* ${it.material}\n`;
+      msg += `     ➜ *${it.cantidad}* ${it.cantidad === 1 ? 'unidad' : 'unidades'}\n\n`;
+    });
+
+    msg += `━━━━━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `🏪 *SOLICITUD PARA COTIZAR / DESPACHAR*\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━━━━\n`;
+    if(MI_EMPRESA) msg += `🏢 *Empresa:* ${MI_EMPRESA}\n`;
+    msg += `👷 *Solicita:* ${MI_NOMBRE}\n`;
+    msg += `📞 *Tel:* ${MI_TELEFONO}\n`;
   } else {
-    msg += `_Lista preparada por:_\n`;
-    if(MI_EMPRESA) msg += `_${MI_EMPRESA}_\n`;
-    msg += `_${MI_NOMBRE}_\n`;
-    msg += `_Tel: ${MI_TELEFONO}_`;
+    /* ====== FORMATO COMPACTO PARA EL CLIENTE ====== */
+    msg += `⚡ *LISTA DE MATERIALES*\n`;
+    msg += `👤 ${nombre}\n`;
+    msg += `📅 ${fecha}\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━━━━\n`;
+
+    lista.forEach((it, i) => {
+      const num = String(i+1).padStart(2, '0');
+      msg += `${num}. ${it.material}  ➜  *${it.cantidad}*\n`;
+    });
+
+    msg += `━━━━━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `📦 *Total:* ${lista.length} items\n\n`;
+    msg += `✅ _Lista preparada por:_\n`;
+    if(MI_EMPRESA) msg += `🏢 _${MI_EMPRESA}_\n`;
+    msg += `👷 _${MI_NOMBRE}_\n`;
+    msg += `📞 _Tel: ${MI_TELEFONO}_`;
   }
 
   const texto = encodeURIComponent(msg);
